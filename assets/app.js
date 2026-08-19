@@ -5,6 +5,7 @@ const mediaPath=(path)=>{if(!path)return fallback;const value=String(path).trim(
 const safeImage=(img)=>{if(!img)return;img.addEventListener('error',()=>{img.src=fallback},{once:true});};
 document.querySelectorAll('img').forEach(safeImage);
 const getPath=(obj,path)=>path.split('.').reduce((acc,key)=>acc?.[key],obj);
+const esc=(value)=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fontStacks={'Georgia':"Georgia, 'Times New Roman', serif",'Cormorant Garamond':"'Cormorant Garamond', Georgia, serif",'Playfair Display':"'Playfair Display', Georgia, serif",'Libre Baskerville':"'Libre Baskerville', Georgia, serif",'Arial':"Arial, Helvetica, sans-serif",'Inter':"Inter, Arial, sans-serif",'Montserrat':"Montserrat, Arial, sans-serif",'Lato':"Lato, Arial, sans-serif"};
 
 const instagramSvg=`<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>`;
@@ -14,9 +15,15 @@ const renderFooter=(site)=>{
   const f=site.footer||{};
   const instagram=String(f.instagram_url||'').trim();
   const email=String(f.email_address||'').trim();
-  const instagramLink=instagram?`<a class="footer-social" href="${instagram.replace(/"/g,'&quot;')}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">${instagramSvg}</a>`:`<span class="footer-social is-disabled" aria-label="Instagram sin configurar">${instagramSvg}</span>`;
-  const emailLink=email?`<a class="footer-social" href="mailto:${email.replace(/"/g,'&quot;')}" aria-label="Correo electrónico">${mailSvg}</a>`:`<span class="footer-social is-disabled" aria-label="Correo sin configurar">${mailSvg}</span>`;
-  footer.innerHTML=`<div class="footer-main"><div class="footer-brand"><div class="footer-name">${String(site.branding?.name||'Michelle Cepeda').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}</div><div class="footer-tagline">${String(site.branding?.tagline||'FOTOGRAFÍA').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}</div><p>${String(f.description||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}</p></div><div class="footer-socials">${instagramLink}${emailLink}</div></div><div class="footer-bottom"><span>${String(f.copyright||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}</span></div>`;
+  const instagramLink=instagram?`<a class="footer-social" href="${esc(instagram)}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">${instagramSvg}</a>`:`<span class="footer-social is-disabled" aria-label="Instagram sin configurar">${instagramSvg}</span>`;
+  const emailLink=email?`<a class="footer-social" href="mailto:${esc(email)}" aria-label="Correo electrónico">${mailSvg}</a>`:`<span class="footer-social is-disabled" aria-label="Correo sin configurar">${mailSvg}</span>`;
+  const contactHref=email?`mailto:${esc(email)}`:'./contacto.html';
+  footer.innerHTML=`<div class="footer-grid">
+    <div class="footer-quote"><span class="quote-mark">“</span><p>${esc(f.quote||'La luz no solo revela, también guarda memoria.')}</p></div>
+    <div class="footer-project"><p class="footer-kicker">${esc(f.project_title||'¿TIENES UN PROYECTO?')}</p><p>${esc(f.project_text||'Hablemos sobre tu idea y cómo puedo ayudarte a contarla en imágenes.')}</p></div>
+    <div class="footer-action"><a class="footer-button" href="${contactHref}"><span>${esc(f.button_text||'ESCRÍBEME')}</span><span aria-hidden="true">→</span></a></div>
+    <div class="footer-contact"><div class="footer-socials">${instagramLink}<span class="footer-separator"></span>${emailLink}</div><p class="footer-copyright">${esc(f.copyright||'© Michelle Cepeda. Todos los derechos reservados.')}</p></div>
+  </div>`;
 };
 
 fetch(new URL('content/site.json',siteRoot),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(site=>{
