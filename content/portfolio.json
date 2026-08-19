@@ -20,7 +20,7 @@
       ]
     },
     {
-      "title": "Sesiones personalizadas",
+      "title": "Historias",
       "visible": true,
       "cover": "/portafolio/uploads/foto-1.jpg",
       "photos": [
@@ -122,9 +122,9 @@
       ]
     },
     {
-      "title": "Comercial",
+      "title": "Retratos",
       "visible": true,
-      "cover": "./uploads/comercial-portada.jpg",
+      "cover": "/portafolio/uploads/foto-sesion.jpg",
       "photos": [
         {
           "image": "./uploads/comercial-01.jpg",
