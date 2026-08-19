@@ -1,10 +1,32 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
 backend:
   name: github
   repo: michellecr/portafolio
   branch: main
-media_folder: uploads
-public_folder: ./uploads
+  auth_methods: [token]
+
+site_url: https://michellecr.github.io/portafolio/
+display_url: https://michellecr.github.io/portafolio/
+media_folder: /uploads
+public_folder: /portafolio/uploads
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+
 collections:
+  - name: home
+    label: Inicio
+    files:
+      - name: home
+        label: Fotografías del inicio
+        file: content/home.json
+        fields:
+          - {label: Fotografía principal, name: hero, widget: image}
+          - {label: Texto alternativo principal, name: hero_alt, widget: string, required: false}
+          - {label: Fotografía de la fotógrafa, name: photographer, widget: image}
+          - {label: Texto alternativo fotógrafa, name: photographer_alt, widget: string, required: false}
+
   - name: portfolio
     label: Portfolio
     files:
