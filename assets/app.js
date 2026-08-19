@@ -11,92 +11,36 @@ const mediaPath=(path)=>{
   return new URL(value.replace(/^\.\//,''),document.baseURI).href;
 };
 
-const safeImage=(img)=>{
-  if(!img) return;
-  img.addEventListener('error',()=>{img.src=fallback},{once:true});
-};
-
+const safeImage=(img)=>{if(!img)return;img.addEventListener('error',()=>{img.src=fallback},{once:true});};
 document.querySelectorAll('img').forEach(safeImage);
 
 const getPath=(obj,path)=>path.split('.').reduce((acc,key)=>acc?.[key],obj);
-const fontStacks={
-  'Georgia':"Georgia, 'Times New Roman', serif",
-  'Cormorant Garamond':"'Cormorant Garamond', Georgia, serif",
-  'Playfair Display':"'Playfair Display', Georgia, serif",
-  'Libre Baskerville':"'Libre Baskerville', Georgia, serif",
-  'Arial':"Arial, Helvetica, sans-serif",
-  'Inter':"Inter, Arial, sans-serif",
-  'Montserrat':"Montserrat, Arial, sans-serif",
-  'Lato':"Lato, Arial, sans-serif"
+const fontStacks={'Georgia':"Georgia, 'Times New Roman', serif",'Cormorant Garamond':"'Cormorant Garamond', Georgia, serif",'Playfair Display':"'Playfair Display', Georgia, serif",'Libre Baskerville':"'Libre Baskerville', Georgia, serif",'Arial':"Arial, Helvetica, sans-serif",'Inter':"Inter, Arial, sans-serif",'Montserrat':"Montserrat, Arial, sans-serif",'Lato':"Lato, Arial, sans-serif"};
+
+fetch(new URL('content/site.json',siteRoot),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(site=>{
+  if(site.fonts?.heading)document.documentElement.style.setProperty('--font-heading',fontStacks[site.fonts.heading]||fontStacks.Georgia);
+  if(site.fonts?.body)document.documentElement.style.setProperty('--font-body',fontStacks[site.fonts.body]||fontStacks.Arial);
+  document.querySelectorAll('[data-content]').forEach(el=>{const value=getPath(site,el.dataset.content);if(value===undefined||value===null)return;if(el.dataset.multiline==='true')el.innerHTML=String(value).split('\n').map(v=>v.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))).join('<br>');else el.textContent=value;});
+  document.querySelectorAll('[data-placeholder]').forEach(el=>{const value=getPath(site,el.dataset.placeholder);if(value!==undefined&&value!==null)el.placeholder=value;});
+}).catch(()=>{});
+
+const homeHero=document.querySelector('#homeHero');const photographer=document.querySelector('#photographer');
+if(homeHero||photographer){fetch(new URL('content/home.json',siteRoot),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(data=>{if(homeHero&&data.hero){homeHero.src=mediaPath(data.hero);homeHero.alt=data.hero_alt||'Fotografía principal';}if(photographer&&data.photographer){photographer.src=mediaPath(data.photographer);photographer.alt=data.photographer_alt||'Fotógrafa';}}).catch(()=>{});}
+
+const coverPosition=(title)=>{
+  const t=String(title||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  if(t.includes('eventos en vivo')) return 'left center';
+  if(t.includes('historias')) return 'center center';
+  if(t.includes('viajes')) return 'center center';
+  if(t.includes('retratos')) return 'center top';
+  return 'center center';
 };
 
-fetch(new URL('content/site.json',siteRoot),{cache:'no-store'})
-  .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
-  .then(site=>{
-    if(site.fonts?.heading) document.documentElement.style.setProperty('--font-heading',fontStacks[site.fonts.heading]||fontStacks.Georgia);
-    if(site.fonts?.body) document.documentElement.style.setProperty('--font-body',fontStacks[site.fonts.body]||fontStacks.Arial);
-    document.querySelectorAll('[data-content]').forEach(el=>{
-      const value=getPath(site,el.dataset.content);
-      if(value===undefined||value===null) return;
-      if(el.dataset.multiline==='true') el.innerHTML=String(value).split('\n').map(v=>v.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))).join('<br>');
-      else el.textContent=value;
-    });
-    document.querySelectorAll('[data-placeholder]').forEach(el=>{
-      const value=getPath(site,el.dataset.placeholder);
-      if(value!==undefined&&value!==null) el.placeholder=value;
-    });
-  })
-  .catch(()=>{});
-
-const homeHero=document.querySelector('#homeHero');
-const photographer=document.querySelector('#photographer');
-if(homeHero||photographer){
-  fetch(new URL('content/home.json',siteRoot),{cache:'no-store'})
-    .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
-    .then(data=>{
-      if(homeHero&&data.hero){homeHero.src=mediaPath(data.hero);homeHero.alt=data.hero_alt||'Fotografía principal';}
-      if(photographer&&data.photographer){photographer.src=mediaPath(data.photographer);photographer.alt=data.photographer_alt||'Fotógrafa';}
-    })
-    .catch(()=>{});
-}
-
 const rail=document.querySelector('#portfolioRail');
-if(rail){
-  fetch(new URL('content/portfolio.json',siteRoot),{cache:'no-store'})
-    .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
-    .then(data=>{
-      let active=[],idx=0;
-      const lb=document.querySelector('#lightbox'),img=document.querySelector('#lbImage'),title=document.querySelector('#lbTitle');
-      const show=()=>{const p=active[idx];img.src=mediaPath(p?.image);title.textContent=p?.title||'';};
-      const open=(g)=>{active=g.photos||[];if(!active.length)active=[{image:g.cover,title:g.title}];idx=0;show();lb.classList.add('open');lb.setAttribute('aria-hidden','false');};
-      (data.groups||[]).filter(g=>g.visible!==false).forEach(g=>{
-        const card=document.createElement('article');
-        card.className='group-card';
-        const frame=document.createElement('div');
-        frame.className='group-frame';
-        const cover=document.createElement('img');
-        cover.className='group-cover';
-        cover.src=mediaPath(g.cover);
-        cover.alt=g.title||'';
-        safeImage(cover);
-        frame.appendChild(cover);
-        const heading=document.createElement('h3');
-        heading.textContent=g.title||'';
-        card.append(frame,heading);
-        card.onclick=()=>open(g);
-        rail.appendChild(card);
-      });
-      safeImage(img);
-      document.querySelector('.lb-close').onclick=()=>lb.classList.remove('open');
-      document.querySelector('.lb-prev').onclick=()=>{idx=(idx-1+active.length)%active.length;show()};
-      document.querySelector('.lb-next').onclick=()=>{idx=(idx+1)%active.length;show()};
-      lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open')});
-      document.addEventListener('keydown',e=>{
-        if(!lb.classList.contains('open'))return;
-        if(e.key==='Escape')lb.classList.remove('open');
-        if(e.key==='ArrowLeft')document.querySelector('.lb-prev').click();
-        if(e.key==='ArrowRight')document.querySelector('.lb-next').click();
-      });
-    })
-    .catch(()=>rail.innerHTML='<p>El portfolio está listo para recibir tus fotografías desde el CMS.</p>');
-}
+if(rail){fetch(new URL('content/portfolio.json',siteRoot),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(data=>{
+  let active=[],idx=0;const lb=document.querySelector('#lightbox'),img=document.querySelector('#lbImage'),title=document.querySelector('#lbTitle');
+  const show=()=>{const p=active[idx];img.src=mediaPath(p?.image);title.textContent=p?.title||'';};
+  const open=(g)=>{active=g.photos||[];if(!active.length)active=[{image:g.cover,title:g.title}];idx=0;show();lb.classList.add('open');lb.setAttribute('aria-hidden','false');};
+  (data.groups||[]).filter(g=>g.visible!==false).forEach(g=>{const card=document.createElement('article');card.className='group-card';const frame=document.createElement('div');frame.className='group-frame';const cover=document.createElement('img');cover.className='group-cover';cover.src=mediaPath(g.cover);cover.alt=g.title||'';cover.style.objectPosition=coverPosition(g.title);safeImage(cover);frame.appendChild(cover);const heading=document.createElement('h3');heading.textContent=g.title||'';card.append(frame,heading);card.onclick=()=>open(g);rail.appendChild(card);});
+  safeImage(img);document.querySelector('.lb-close').onclick=()=>lb.classList.remove('open');document.querySelector('.lb-prev').onclick=()=>{idx=(idx-1+active.length)%active.length;show()};document.querySelector('.lb-next').onclick=()=>{idx=(idx+1)%active.length;show()};lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open')});document.addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')lb.classList.remove('open');if(e.key==='ArrowLeft')document.querySelector('.lb-prev').click();if(e.key==='ArrowRight')document.querySelector('.lb-next').click();});
+}).catch(()=>rail.innerHTML='<p>El portfolio está listo para recibir tus fotografías desde el CMS.</p>');}
