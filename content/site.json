@@ -48,9 +48,9 @@
     "button": "Enviar consulta"
   },
   "footer": {
-    "eyebrow": "Contacto",
-    "title": "Lo que merece quedarse.",
-    "prompt": "¿Tienes una idea o proyecto en mente?",
-    "button": "Conversemos"
+    "description": "Fotografía documental, retratos, música, proyectos comerciales y viajes.",
+    "instagram_url": "",
+    "email_address": "",
+    "copyright": "© Michelle Cepeda. Todos los derechos reservados."
   }
 }
