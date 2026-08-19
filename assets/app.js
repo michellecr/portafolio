@@ -1,19 +1,13 @@
 const fallback='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1100"><rect width="100%" height="100%" fill="#ded8b7"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Georgia" font-size="42" fill="#605a7b">Añadir fotografía</text></svg>`);
 
+const siteRoot=new URL('./',document.baseURI);
+
 const mediaPath=(path)=>{
   if(!path) return fallback;
   const value=String(path).trim();
   if(/^data:|^https?:\/\//i.test(value)) return value;
-
-  // Sveltia puede guardar /portafolio/uploads/x.jpg, /uploads/x.jpg o ./uploads/x.jpg.
-  // Extraemos siempre la parte uploads/... y la resolvemos contra la raíz real
-  // de este GitHub Pages, evitando rutas relativas a /assets/ u otras páginas.
   const uploadMatch=value.match(/(?:^|\/)uploads\/(.+)$/i);
-  if(uploadMatch){
-    const siteRoot=new URL('./',document.baseURI);
-    return new URL(`uploads/${uploadMatch[1]}`,siteRoot).href;
-  }
-
+  if(uploadMatch) return new URL(`uploads/${uploadMatch[1]}`,siteRoot).href;
   return new URL(value.replace(/^\.\//,''),document.baseURI).href;
 };
 
@@ -24,10 +18,40 @@ const safeImage=(img)=>{
 
 document.querySelectorAll('img').forEach(safeImage);
 
+const getPath=(obj,path)=>path.split('.').reduce((acc,key)=>acc?.[key],obj);
+const fontStacks={
+  'Georgia':"Georgia, 'Times New Roman', serif",
+  'Cormorant Garamond':"'Cormorant Garamond', Georgia, serif",
+  'Playfair Display':"'Playfair Display', Georgia, serif",
+  'Libre Baskerville':"'Libre Baskerville', Georgia, serif",
+  'Arial':"Arial, Helvetica, sans-serif",
+  'Inter':"Inter, Arial, sans-serif",
+  'Montserrat':"Montserrat, Arial, sans-serif",
+  'Lato':"Lato, Arial, sans-serif"
+};
+
+fetch(new URL('content/site.json',siteRoot),{cache:'no-store'})
+  .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
+  .then(site=>{
+    if(site.fonts?.heading) document.documentElement.style.setProperty('--font-heading',fontStacks[site.fonts.heading]||fontStacks.Georgia);
+    if(site.fonts?.body) document.documentElement.style.setProperty('--font-body',fontStacks[site.fonts.body]||fontStacks.Arial);
+    document.querySelectorAll('[data-content]').forEach(el=>{
+      const value=getPath(site,el.dataset.content);
+      if(value===undefined||value===null) return;
+      if(el.dataset.multiline==='true') el.innerHTML=String(value).split('\n').map(v=>v.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))).join('<br>');
+      else el.textContent=value;
+    });
+    document.querySelectorAll('[data-placeholder]').forEach(el=>{
+      const value=getPath(site,el.dataset.placeholder);
+      if(value!==undefined&&value!==null) el.placeholder=value;
+    });
+  })
+  .catch(()=>{});
+
 const homeHero=document.querySelector('#homeHero');
 const photographer=document.querySelector('#photographer');
 if(homeHero||photographer){
-  fetch(new URL('content/home.json',new URL('./',document.baseURI)),{cache:'no-store'})
+  fetch(new URL('content/home.json',siteRoot),{cache:'no-store'})
     .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
     .then(data=>{
       if(homeHero&&data.hero){homeHero.src=mediaPath(data.hero);homeHero.alt=data.hero_alt||'Fotografía principal';}
@@ -38,32 +62,27 @@ if(homeHero||photographer){
 
 const rail=document.querySelector('#portfolioRail');
 if(rail){
-  fetch(new URL('content/portfolio.json',new URL('./',document.baseURI)),{cache:'no-store'})
+  fetch(new URL('content/portfolio.json',siteRoot),{cache:'no-store'})
     .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
     .then(data=>{
       let active=[],idx=0;
       const lb=document.querySelector('#lightbox'),img=document.querySelector('#lbImage'),title=document.querySelector('#lbTitle');
-      const show=()=>{
-        const p=active[idx];
-        img.src=mediaPath(p?.image);
-        title.textContent=p?.title||'';
-      };
-      const open=(g)=>{
-        active=g.photos||[];
-        if(!active.length)active=[{image:g.cover,title:g.title}];
-        idx=0;show();lb.classList.add('open');lb.setAttribute('aria-hidden','false');
-      };
+      const show=()=>{const p=active[idx];img.src=mediaPath(p?.image);title.textContent=p?.title||'';};
+      const open=(g)=>{active=g.photos||[];if(!active.length)active=[{image:g.cover,title:g.title}];idx=0;show();lb.classList.add('open');lb.setAttribute('aria-hidden','false');};
       (data.groups||[]).filter(g=>g.visible!==false).forEach(g=>{
         const card=document.createElement('article');
         card.className='group-card';
+        const frame=document.createElement('div');
+        frame.className='group-frame';
         const cover=document.createElement('img');
         cover.className='group-cover';
         cover.src=mediaPath(g.cover);
         cover.alt=g.title||'';
         safeImage(cover);
+        frame.appendChild(cover);
         const heading=document.createElement('h3');
         heading.textContent=g.title||'';
-        card.append(cover,heading);
+        card.append(frame,heading);
         card.onclick=()=>open(g);
         rail.appendChild(card);
       });
