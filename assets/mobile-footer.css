@@ -9,7 +9,6 @@
     width: 100% !important;
   }
 
-  /* Anula por completo las divisiones verticales heredadas del diseño desktop/tablet. */
   .footer-grid > div,
   .footer-grid > div:nth-child(odd),
   .footer-grid > div:nth-child(even),
@@ -25,7 +24,6 @@
     margin-right: 0 !important;
   }
 
-  /* BLOQUE 1: cita */
   .footer-quote {
     display: flex !important;
     flex-direction: column !important;
@@ -57,7 +55,6 @@
     text-align: center !important;
   }
 
-  /* BLOQUE 2: proyecto + botón. Se perciben como una sola sección. */
   .footer-project {
     padding: 28px 8px 12px !important;
     border-top: 0 !important;
@@ -100,7 +97,6 @@
     margin: 0 auto !important;
   }
 
-  /* BLOQUE 3: redes + copyright */
   .footer-contact {
     padding: 28px 8px 30px !important;
     border-top: 0 !important;
@@ -127,5 +123,35 @@
     text-align: center !important;
     font-size: 10px !important;
     line-height: 1.5 !important;
+  }
+
+  /* Portafolio móvil: en vez de exigir un gesto horizontal oculto,
+     mostramos todos los grupos en una lista vertical clara. */
+  .portfolio-rail {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+    padding: 0 0 18px !important;
+  }
+
+  .group-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    scroll-snap-align: none !important;
+    margin: 0 !important;
+  }
+
+  .group-frame {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  .group-card h3 {
+    margin: 12px 0 0 !important;
+    font-size: 22px !important;
+    text-align: center !important;
   }
 }
