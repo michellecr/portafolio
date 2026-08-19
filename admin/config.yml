@@ -56,7 +56,7 @@ collections:
               - {label: Servicio 2, name: service_2, widget: string}
               - {label: Servicio 3, name: service_3, widget: string}
               - {label: Servicio 4, name: service_4, widget: string}
-          - label: Portfolio
+          - label: Portafolio
             name: portfolio
             widget: object
             fields:
@@ -92,10 +92,10 @@ collections:
             name: footer
             widget: object
             fields:
-              - {label: Etiqueta, name: eyebrow, widget: string}
-              - {label: Título, name: title, widget: string}
-              - {label: Invitación, name: prompt, widget: string}
-              - {label: Texto botón, name: button, widget: string}
+              - {label: Texto descriptivo, name: description, widget: text}
+              - {label: Link de Instagram, name: instagram_url, widget: string, required: false, hint: "Ejemplo: https://instagram.com/tuusuario"}
+              - {label: Correo electrónico, name: email_address, widget: string, required: false, hint: "Ejemplo: hola@tusitio.cl"}
+              - {label: Texto de copyright, name: copyright, widget: string, required: false}
 
   - name: home
     label: Inicio - Fotografías
@@ -110,7 +110,7 @@ collections:
           - {label: Texto alternativo fotógrafa, name: photographer_alt, widget: string, required: false}
 
   - name: portfolio
-    label: Portfolio
+    label: Portafolio
     files:
       - name: groups
         label: Grupos y fotografías
