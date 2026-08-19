@@ -65,10 +65,58 @@
     {
       "title": "Viajes",
       "visible": true,
-      "cover": "./uploads/viajes-portada.jpg",
+      "cover": "/portafolio/uploads/804a311f-61f9-499b-a3a7-19e067c5d286_l0_001-10_5_2024-12_26_51-a.m.-1.jpg",
       "photos": [
         {
-          "image": "./uploads/viajes-01.jpg",
+          "image": "/portafolio/uploads/img_3845.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_4693.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_5853.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_5569.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_6291.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_3521.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_6067.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_1094.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_1811.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_2986.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_0816.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_4234.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/img_6149.jpg",
           "title": ""
         }
       ]
