@@ -1,16 +1,16 @@
 {
   "branding": {
-    "name": "LUZ DE ARCHIVO",
+    "name": "Michelle Cepeda",
     "tagline": "FOTOGRAFÍA"
   },
   "fonts": {
-    "heading": "Georgia",
-    "body": "Arial"
+    "heading": "Cormorant Garamond",
+    "body": "Lato"
   },
   "home": {
     "eyebrow": "FOTOGRAFÍA DOCUMENTAL",
     "title": "Historias reales.\nLuz que permanece.",
-    "intro": "Fotografías honestas, cuidadas y con intención.",
+    "intro": "Fotografías pensadas, cuidadas y con intención.",
     "button": "Ver portfolio",
     "about_eyebrow": "SOBRE MI TRABAJO",
     "about_title": "Documentar lo esencial.",
