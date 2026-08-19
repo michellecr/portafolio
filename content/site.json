@@ -1,0 +1,56 @@
+{
+  "branding": {
+    "name": "LUZ DE ARCHIVO",
+    "tagline": "FOTOGRAFÍA"
+  },
+  "fonts": {
+    "heading": "Georgia",
+    "body": "Arial"
+  },
+  "home": {
+    "eyebrow": "FOTOGRAFÍA DOCUMENTAL",
+    "title": "Historias reales.\nLuz que permanece.",
+    "intro": "Fotografías honestas, cuidadas y con intención.",
+    "button": "Ver portfolio",
+    "about_eyebrow": "SOBRE MI TRABAJO",
+    "about_title": "Documentar lo esencial.",
+    "about_text": "Trabajo desde la observación, la luz y los detalles para crear imágenes que conserven la atmósfera de cada momento.",
+    "services_eyebrow": "SERVICIOS",
+    "service_1": "Retratos y sesiones personalizadas",
+    "service_2": "Fotografía musical y eventos",
+    "service_3": "Fotografía comercial",
+    "service_4": "Proyectos personales y viajes"
+  },
+  "portfolio": {
+    "eyebrow": "PORTFOLIO",
+    "title": "Historias en imágenes.",
+    "intro": "Explora cada grupo y abre la galería para recorrer sus fotografías."
+  },
+  "services": {
+    "eyebrow": "SERVICIOS",
+    "title": "Fotografía con intención.",
+    "item_1_title": "Sesiones personalizadas",
+    "item_1_text": "Retratos, parejas y proyectos personales con una mirada natural y cuidada.",
+    "item_2_title": "Música y eventos",
+    "item_2_text": "Fotografía de conciertos, artistas y momentos en vivo.",
+    "item_3_title": "Comercial",
+    "item_3_text": "Imágenes para marcas, productos y comunicación visual.",
+    "item_4_title": "Proyectos especiales",
+    "item_4_text": "Propuestas fotográficas desarrolladas según las necesidades de cada proyecto."
+  },
+  "contact": {
+    "eyebrow": "CONTACTO",
+    "title": "Cuéntame tu idea.",
+    "intro": "Si tienes una sesión, evento o proyecto en mente, conversemos.",
+    "name_placeholder": "Nombre",
+    "email_placeholder": "Email",
+    "message_placeholder": "Cuéntame sobre tu proyecto",
+    "button": "Enviar consulta"
+  },
+  "footer": {
+    "eyebrow": "LUZ DE ARCHIVO",
+    "title": "Lo que merece quedarse.",
+    "prompt": "¿Tienes un proyecto en mente?",
+    "button": "Hablemos"
+  }
+}
