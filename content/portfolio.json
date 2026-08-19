@@ -1,8 +1,56 @@
 {
   "groups": [
-    {"title":"Música","visible":true,"cover":"./uploads/musica-portada.jpg","photos":[{"image":"./uploads/musica-01.jpg","title":""}]},
-    {"title":"Sesiones personalizadas","visible":true,"cover":"./uploads/sesiones-portada.jpg","photos":[{"image":"./uploads/sesiones-01.jpg","title":""}]},
-    {"title":"Viajes","visible":true,"cover":"./uploads/viajes-portada.jpg","photos":[{"image":"./uploads/viajes-01.jpg","title":""}]},
-    {"title":"Comercial","visible":true,"cover":"./uploads/comercial-portada.jpg","photos":[{"image":"./uploads/comercial-01.jpg","title":""}]}
+    {
+      "title": "Música",
+      "visible": true,
+      "cover": "/portafolio/uploads/enforcer_letalis-40.jpg",
+      "photos": [
+        {
+          "image": "/portafolio/uploads/enigma-15.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/enforcer_letalis-2.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/angra-14.jpg",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "title": "Sesiones personalizadas",
+      "visible": true,
+      "cover": "./uploads/sesiones-portada.jpg",
+      "photos": [
+        {
+          "image": "./uploads/sesiones-01.jpg",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "title": "Viajes",
+      "visible": true,
+      "cover": "./uploads/viajes-portada.jpg",
+      "photos": [
+        {
+          "image": "./uploads/viajes-01.jpg",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "title": "Comercial",
+      "visible": true,
+      "cover": "./uploads/comercial-portada.jpg",
+      "photos": [
+        {
+          "image": "./uploads/comercial-01.jpg",
+          "title": ""
+        }
+      ]
+    }
   ]
 }
