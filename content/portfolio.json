@@ -22,10 +22,14 @@
     {
       "title": "Sesiones personalizadas",
       "visible": true,
-      "cover": "./uploads/sesiones-portada.jpg",
+      "cover": "/portafolio/uploads/foto-1.jpg",
       "photos": [
         {
-          "image": "./uploads/sesiones-01.jpg",
+          "image": "/portafolio/uploads/foto-1-2.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/foto-24.jpg",
           "title": ""
         }
       ]
