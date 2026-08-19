@@ -2,9 +2,19 @@ const fallback='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(`<svg xmln
 
 const mediaPath=(path)=>{
   if(!path) return fallback;
-  return path
-    .replace(/^\/portafolio\/uploads\//,'./uploads/')
-    .replace(/^\/uploads\//,'./uploads/');
+  const value=String(path).trim();
+  if(/^data:|^https?:\/\//i.test(value)) return value;
+
+  // Sveltia puede guardar /portafolio/uploads/x.jpg, /uploads/x.jpg o ./uploads/x.jpg.
+  // Extraemos siempre la parte uploads/... y la resolvemos contra la raíz real
+  // de este GitHub Pages, evitando rutas relativas a /assets/ u otras páginas.
+  const uploadMatch=value.match(/(?:^|\/)uploads\/(.+)$/i);
+  if(uploadMatch){
+    const siteRoot=new URL('./',document.baseURI);
+    return new URL(`uploads/${uploadMatch[1]}`,siteRoot).href;
+  }
+
+  return new URL(value.replace(/^\.\//,''),document.baseURI).href;
 };
 
 const safeImage=(img)=>{
@@ -17,8 +27,8 @@ document.querySelectorAll('img').forEach(safeImage);
 const homeHero=document.querySelector('#homeHero');
 const photographer=document.querySelector('#photographer');
 if(homeHero||photographer){
-  fetch('./content/home.json',{cache:'no-store'})
-    .then(r=>r.json())
+  fetch(new URL('content/home.json',new URL('./',document.baseURI)),{cache:'no-store'})
+    .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
     .then(data=>{
       if(homeHero&&data.hero){homeHero.src=mediaPath(data.hero);homeHero.alt=data.hero_alt||'Fotografía principal';}
       if(photographer&&data.photographer){photographer.src=mediaPath(data.photographer);photographer.alt=data.photographer_alt||'Fotógrafa';}
@@ -28,8 +38,8 @@ if(homeHero||photographer){
 
 const rail=document.querySelector('#portfolioRail');
 if(rail){
-  fetch('./content/portfolio.json',{cache:'no-store'})
-    .then(r=>r.json())
+  fetch(new URL('content/portfolio.json',new URL('./',document.baseURI)),{cache:'no-store'})
+    .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
     .then(data=>{
       let active=[],idx=0;
       const lb=document.querySelector('#lightbox'),img=document.querySelector('#lbImage'),title=document.querySelector('#lbTitle');
@@ -43,16 +53,16 @@ if(rail){
         if(!active.length)active=[{image:g.cover,title:g.title}];
         idx=0;show();lb.classList.add('open');lb.setAttribute('aria-hidden','false');
       };
-      data.groups.filter(g=>g.visible!==false).forEach(g=>{
+      (data.groups||[]).filter(g=>g.visible!==false).forEach(g=>{
         const card=document.createElement('article');
         card.className='group-card';
         const cover=document.createElement('img');
         cover.className='group-cover';
         cover.src=mediaPath(g.cover);
-        cover.alt=g.title;
+        cover.alt=g.title||'';
         safeImage(cover);
         const heading=document.createElement('h3');
-        heading.textContent=g.title;
+        heading.textContent=g.title||'';
         card.append(cover,heading);
         card.onclick=()=>open(g);
         rail.appendChild(card);
