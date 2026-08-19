@@ -92,7 +92,10 @@ collections:
             name: footer
             widget: object
             fields:
-              - {label: Texto descriptivo, name: description, widget: text}
+              - {label: Frase destacada, name: quote, widget: text}
+              - {label: Título del llamado, name: project_title, widget: string}
+              - {label: Texto del llamado, name: project_text, widget: text}
+              - {label: Texto del botón, name: button_text, widget: string}
               - {label: Link de Instagram, name: instagram_url, widget: string, required: false, hint: "Ejemplo: https://instagram.com/tuusuario"}
               - {label: Correo electrónico, name: email_address, widget: string, required: false, hint: "Ejemplo: hola@tusitio.cl"}
               - {label: Texto de copyright, name: copyright, widget: string, required: false}
