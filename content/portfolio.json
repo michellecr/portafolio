@@ -3,7 +3,7 @@
     {
       "title": "Eventos en Vivo",
       "visible": true,
-      "cover": "/portafolio/uploads/enforcer_letalis-40.jpg",
+      "cover": "/portafolio/uploads/foto-51.jpg",
       "photos": [
         {
           "image": "/portafolio/uploads/enigma-15.jpg",
@@ -15,6 +15,26 @@
         },
         {
           "image": "/portafolio/uploads/angra-14.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/foto-52.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/foto-53.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/enforcer_letalis-40.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/lolaindigo-14.jpg",
+          "title": ""
+        },
+        {
+          "image": "/portafolio/uploads/lolaindigo-12.jpg",
           "title": ""
         }
       ]
