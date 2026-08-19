@@ -48,7 +48,10 @@
     "button": "Enviar consulta"
   },
   "footer": {
-    "description": "Fotografía documental, retratos, música, proyectos comerciales y viajes.",
+    "quote": "La luz no solo revela, también guarda memoria.",
+    "project_title": "¿TIENES UN PROYECTO?",
+    "project_text": "Hablemos sobre tu idea y cómo puedo ayudarte a contarla en imágenes.",
+    "button_text": "ESCRÍBEME",
     "instagram_url": "",
     "email_address": "",
     "copyright": "© Michelle Cepeda. Todos los derechos reservados."
