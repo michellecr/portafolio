@@ -15,8 +15,90 @@ media_libraries:
       slugify_filename: true
 
 collections:
+  - name: site
+    label: Textos y estilo
+    files:
+      - name: site
+        label: Contenido general
+        file: content/site.json
+        fields:
+          - label: Identidad
+            name: branding
+            widget: object
+            fields:
+              - {label: Nombre del sitio, name: name, widget: string}
+              - {label: Bajada del logo, name: tagline, widget: string}
+          - label: Tipografías
+            name: fonts
+            widget: object
+            fields:
+              - label: Fuente de títulos
+                name: heading
+                widget: select
+                options: [Georgia, "Cormorant Garamond", "Playfair Display", "Libre Baskerville"]
+              - label: Fuente de texto
+                name: body
+                widget: select
+                options: [Arial, Inter, Montserrat, Lato]
+          - label: Inicio
+            name: home
+            widget: object
+            fields:
+              - {label: Etiqueta superior, name: eyebrow, widget: string}
+              - {label: Título principal, name: title, widget: text}
+              - {label: Texto introductorio, name: intro, widget: text}
+              - {label: Texto botón, name: button, widget: string}
+              - {label: Etiqueta Sobre mi trabajo, name: about_eyebrow, widget: string}
+              - {label: Título Sobre mi trabajo, name: about_title, widget: string}
+              - {label: Texto Sobre mi trabajo, name: about_text, widget: text}
+              - {label: Etiqueta Servicios, name: services_eyebrow, widget: string}
+              - {label: Servicio 1, name: service_1, widget: string}
+              - {label: Servicio 2, name: service_2, widget: string}
+              - {label: Servicio 3, name: service_3, widget: string}
+              - {label: Servicio 4, name: service_4, widget: string}
+          - label: Portfolio
+            name: portfolio
+            widget: object
+            fields:
+              - {label: Etiqueta superior, name: eyebrow, widget: string}
+              - {label: Título, name: title, widget: string}
+              - {label: Texto introductorio, name: intro, widget: text}
+          - label: Servicios
+            name: services
+            widget: object
+            fields:
+              - {label: Etiqueta superior, name: eyebrow, widget: string}
+              - {label: Título, name: title, widget: string}
+              - {label: Servicio 1 - título, name: item_1_title, widget: string}
+              - {label: Servicio 1 - texto, name: item_1_text, widget: text}
+              - {label: Servicio 2 - título, name: item_2_title, widget: string}
+              - {label: Servicio 2 - texto, name: item_2_text, widget: text}
+              - {label: Servicio 3 - título, name: item_3_title, widget: string}
+              - {label: Servicio 3 - texto, name: item_3_text, widget: text}
+              - {label: Servicio 4 - título, name: item_4_title, widget: string}
+              - {label: Servicio 4 - texto, name: item_4_text, widget: text}
+          - label: Contacto
+            name: contact
+            widget: object
+            fields:
+              - {label: Etiqueta superior, name: eyebrow, widget: string}
+              - {label: Título, name: title, widget: string}
+              - {label: Texto introductorio, name: intro, widget: text}
+              - {label: Placeholder nombre, name: name_placeholder, widget: string}
+              - {label: Placeholder email, name: email_placeholder, widget: string}
+              - {label: Placeholder mensaje, name: message_placeholder, widget: string}
+              - {label: Texto botón, name: button, widget: string}
+          - label: Pie de página
+            name: footer
+            widget: object
+            fields:
+              - {label: Etiqueta, name: eyebrow, widget: string}
+              - {label: Título, name: title, widget: string}
+              - {label: Invitación, name: prompt, widget: string}
+              - {label: Texto botón, name: button, widget: string}
+
   - name: home
-    label: Inicio
+    label: Inicio - Fotografías
     files:
       - name: home
         label: Fotografías del inicio
