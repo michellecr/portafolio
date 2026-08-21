@@ -7,35 +7,43 @@
       "photos": [
         {
           "image": "/portafolio/uploads/enigma-15.jpg",
-          "title": ""
+          "title": "",
+          "caption": "Enigma, Teatro Caupolicán 2025"
         },
         {
           "image": "/portafolio/uploads/enforcer_letalis-2.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/angra-14.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-52.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-53.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/enforcer_letalis-40.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/lolaindigo-14.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/lolaindigo-12.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         }
       ]
     },
@@ -46,39 +54,48 @@
       "photos": [
         {
           "image": "/portafolio/uploads/foto-1-2.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-24.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-12.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-11.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-13.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-31.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-33.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-32.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/foto-34.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         }
       ]
     },
@@ -89,55 +106,68 @@
       "photos": [
         {
           "image": "/portafolio/uploads/img_3845.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_4693.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_5853.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_5569.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_3017.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_3521.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_6067.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_1094.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_1811.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_2986.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_0816.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_4234.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         },
         {
           "image": "/portafolio/uploads/img_6149.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         }
       ]
     },
@@ -148,7 +178,8 @@
       "photos": [
         {
           "image": "./uploads/comercial-01.jpg",
-          "title": ""
+          "title": "",
+          "caption": ""
         }
       ]
     }
