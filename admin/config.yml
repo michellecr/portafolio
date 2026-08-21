@@ -133,3 +133,4 @@ collections:
                 fields:
                   - {label: Imagen, name: image, widget: image}
                   - {label: Título opcional, name: title, widget: string, required: false}
+                  - {label: Descripción breve, name: caption, widget: string, required: false, hint: "Ejemplo: Enigma, Teatro Caupolicán 2025"}
