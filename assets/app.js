@@ -39,4 +39,144 @@ if(homeHero||photographer){fetch(new URL('content/home.json',siteRoot),{cache:'n
 
 const coverPosition=(title)=>{const t=String(title||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(t.includes('eventos en vivo'))return'left center';if(t.includes('historias'))return'center center';if(t.includes('viajes'))return'center center';if(t.includes('retratos'))return'center top';return'center center';};
 const rail=document.querySelector('#portfolioRail');
-if(rail){fetch(new URL('content/portfolio.json',siteRoot),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(data=>{let active=[],idx=0;const lb=document.querySelector('#lightbox'),img=document.querySelector('#lbImage'),title=document.querySelector('#lbTitle'),caption=document.querySelector('#lbCaption');const show=()=>{const p=active[idx];img.src=mediaPath(p?.image);title.textContent=p?.title||'';if(caption)caption.textContent=p?.caption||'';};const open=(g)=>{active=g.photos||[];if(!active.length)active=[{image:g.cover,title:g.title,caption:''}];idx=0;show();lb.classList.add('open');lb.setAttribute('aria-hidden','false');};(data.groups||[]).filter(g=>g.visible!==false).forEach(g=>{const card=document.createElement('article');card.className='group-card';const frame=document.createElement('div');frame.className='group-frame';const cover=document.createElement('img');cover.className='group-cover';cover.src=mediaPath(g.cover);cover.alt=g.title||'';cover.style.objectPosition=coverPosition(g.title);safeImage(cover);frame.appendChild(cover);const heading=document.createElement('h3');heading.textContent=g.title||'';card.append(frame,heading);card.onclick=()=>open(g);rail.appendChild(card);});safeImage(img);document.querySelector('.lb-close').onclick=()=>lb.classList.remove('open');document.querySelector('.lb-prev').onclick=()=>{idx=(idx-1+active.length)%active.length;show()};document.querySelector('.lb-next').onclick=()=>{idx=(idx+1)%active.length;show()};lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open')});document.addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')lb.classList.remove('open');if(e.key==='ArrowLeft')document.querySelector('.lb-prev').click();if(e.key==='ArrowRight')document.querySelector('.lb-next').click();});}).catch(()=>rail.innerHTML='<p>El portafolio está listo para recibir tus fotografías desde el CMS.</p>');}
+if(rail){
+  fetch(new URL('content/portfolio.json',siteRoot),{cache:'no-store'})
+    .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
+    .then(data=>{
+      const lb=document.querySelector('#lightbox');
+      const img=document.querySelector('#lbImage');
+      const title=document.querySelector('#lbTitle');
+      const caption=document.querySelector('#lbCaption');
+      const page=document.querySelector('main.page');
+      const intro=document.querySelector('.page-intro');
+      let active=[];
+      let idx=0;
+      let galleryView=null;
+
+      const show=()=>{
+        const p=active[idx];
+        img.src=mediaPath(p?.image);
+        title.textContent=p?.title||'';
+        if(caption)caption.textContent=p?.caption||'';
+      };
+
+      const openPhoto=(photos,startIndex=0)=>{
+        active=photos||[];
+        if(!active.length)return;
+        idx=Math.max(0,Math.min(startIndex,active.length-1));
+        show();
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden','false');
+        document.body.classList.add('lightbox-open');
+      };
+
+      const closeLightbox=()=>{
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden','true');
+        document.body.classList.remove('lightbox-open');
+      };
+
+      const renderGroups=()=>{
+        if(galleryView){
+          galleryView.remove();
+          galleryView=null;
+        }
+        if(intro)intro.hidden=false;
+        rail.hidden=false;
+        rail.innerHTML='';
+
+        (data.groups||[]).filter(g=>g.visible!==false).forEach(g=>{
+          const card=document.createElement('article');
+          card.className='group-card';
+          const frame=document.createElement('div');
+          frame.className='group-frame';
+          const cover=document.createElement('img');
+          cover.className='group-cover';
+          cover.src=mediaPath(g.cover);
+          cover.alt=g.title||'';
+          cover.style.objectPosition=coverPosition(g.title);
+          safeImage(cover);
+          frame.appendChild(cover);
+          const heading=document.createElement('h3');
+          heading.textContent=g.title||'';
+          card.append(frame,heading);
+          card.tabIndex=0;
+          card.setAttribute('role','button');
+          card.setAttribute('aria-label',`Abrir galería ${g.title||''}`);
+          card.onclick=()=>openGroup(g);
+          card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openGroup(g);}};
+          rail.appendChild(card);
+        });
+      };
+
+      const openGroup=(g)=>{
+        const photos=(g.photos&&g.photos.length)?g.photos:[{image:g.cover,title:g.title,caption:''}];
+        rail.hidden=true;
+        if(intro)intro.hidden=true;
+
+        galleryView=document.createElement('section');
+        galleryView.className='portfolio-gallery-view';
+
+        const header=document.createElement('div');
+        header.className='portfolio-gallery-header';
+
+        const back=document.createElement('button');
+        back.className='portfolio-back';
+        back.type='button';
+        back.innerHTML='<span aria-hidden="true">←</span> Volver al portafolio';
+        back.onclick=()=>{
+          renderGroups();
+          window.scrollTo({top:0,behavior:'smooth'});
+        };
+
+        const headingWrap=document.createElement('div');
+        headingWrap.className='portfolio-gallery-heading';
+        const eyebrow=document.createElement('p');
+        eyebrow.className='eyebrow pink';
+        eyebrow.textContent='PORTAFOLIO';
+        const h2=document.createElement('h2');
+        h2.textContent=g.title||'Galería';
+        headingWrap.append(eyebrow,h2);
+        header.append(back,headingWrap);
+
+        const grid=document.createElement('div');
+        grid.className='portfolio-masonry';
+
+        photos.forEach((p,i)=>{
+          const button=document.createElement('button');
+          button.className='portfolio-photo';
+          button.type='button';
+          button.setAttribute('aria-label',`Ampliar fotografía ${i+1} de ${photos.length}`);
+
+          const photo=document.createElement('img');
+          photo.src=mediaPath(p.image);
+          photo.alt=p.title||g.title||'Fotografía';
+          photo.loading='lazy';
+          safeImage(photo);
+
+          button.appendChild(photo);
+          button.onclick=()=>openPhoto(photos,i);
+          grid.appendChild(button);
+        });
+
+        galleryView.append(header,grid);
+        page.appendChild(galleryView);
+        window.scrollTo({top:0,behavior:'smooth'});
+      };
+
+      renderGroups();
+      safeImage(img);
+
+      document.querySelector('.lb-close').onclick=closeLightbox;
+      document.querySelector('.lb-prev').onclick=()=>{idx=(idx-1+active.length)%active.length;show();};
+      document.querySelector('.lb-next').onclick=()=>{idx=(idx+1)%active.length;show();};
+      lb.addEventListener('click',e=>{if(e.target===lb)closeLightbox();});
+      document.addEventListener('keydown',e=>{
+        if(!lb.classList.contains('open'))return;
+        if(e.key==='Escape')closeLightbox();
+        if(e.key==='ArrowLeft')document.querySelector('.lb-prev').click();
+        if(e.key==='ArrowRight')document.querySelector('.lb-next').click();
+      });
+    })
+    .catch(()=>rail.innerHTML='<p>El portafolio está listo para recibir tus fotografías desde el CMS.</p>');
+}
