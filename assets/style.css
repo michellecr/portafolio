@@ -28,3 +28,11 @@ body.lightbox-open{overflow:hidden}
 @media(max-width:760px){.portfolio-gallery-header{align-items:flex-start;flex-direction:column;margin-bottom:24px;gap:20px}.portfolio-gallery-heading{text-align:left}.portfolio-gallery-heading h2{font-size:34px}.portfolio-masonry{column-count:2;column-gap:4px}.portfolio-photo{margin-bottom:4px}}
 @media(max-width:430px){.portfolio-gallery-heading h2{font-size:30px}.portfolio-masonry{column-count:2;column-gap:3px}.portfolio-photo{margin-bottom:3px}}
 @media(prefers-reduced-motion:reduce){.portfolio-gallery-view{animation:none}.portfolio-photo img,.portfolio-back{transition:none}.portfolio-photo:hover img,.portfolio-back:hover{transform:none}}
+
+
+/* Estado de navegación dentro de un grupo */
+.portfolio-group-open #portfolioRail,
+.portfolio-group-open .page-intro{display:none!important}
+#portfolioRail[hidden],
+.page-intro[hidden]{display:none!important}
+.portfolio-gallery-view{display:block!important}
