@@ -162,7 +162,17 @@
       "cover": "/portafolio/uploads/foto-sesion.jpg",
       "photos": [
         {
-          "image": "./uploads/comercial-01.jpg",
+          "image": "/portafolio/uploads/foto-6.jpg",
+          "title": "",
+          "caption": ""
+        },
+        {
+          "image": "/portafolio/uploads/foto-3.jpg",
+          "title": "",
+          "caption": ""
+        },
+        {
+          "image": "/portafolio/uploads/foto-2.jpg",
           "title": "",
           "caption": ""
         }
