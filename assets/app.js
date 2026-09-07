@@ -81,8 +81,13 @@ if(rail){
           galleryView.remove();
           galleryView=null;
         }
-        if(intro)intro.hidden=false;
+        page.classList.remove('portfolio-group-open');
+        if(intro){
+          intro.hidden=false;
+          intro.removeAttribute('aria-hidden');
+        }
         rail.hidden=false;
+        rail.removeAttribute('aria-hidden');
         rail.innerHTML='';
 
         (data.groups||[]).filter(g=>g.visible!==false).forEach(g=>{
@@ -110,9 +115,20 @@ if(rail){
       };
 
       const openGroup=(g)=>{
+        document.querySelectorAll('.portfolio-gallery-view').forEach(el=>el.remove());
         const photos=(g.photos&&g.photos.length)?g.photos:[{image:g.cover,title:g.title,caption:''}];
+
+        if(galleryView){
+          galleryView.remove();
+          galleryView=null;
+        }
+        page.classList.add('portfolio-group-open');
         rail.hidden=true;
-        if(intro)intro.hidden=true;
+        rail.setAttribute('aria-hidden','true');
+        if(intro){
+          intro.hidden=true;
+          intro.setAttribute('aria-hidden','true');
+        }
 
         galleryView=document.createElement('section');
         galleryView.className='portfolio-gallery-view';
