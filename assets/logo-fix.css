@@ -9,3 +9,11 @@
   .top nav a:hover,.top nav a.active{opacity:1!important}
   .top nav a.active{font-weight:600!important}
 }
+
+/* Desktop page heading emphasis */
+@media(min-width:1101px){
+  .page>h1,
+  .simple-grid h1{font-size:58px!important;line-height:1.03!important}
+  .page>.eyebrow,
+  .simple-grid .eyebrow{font-size:13px!important}
+}
