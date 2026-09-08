@@ -32,32 +32,23 @@
   }
 }
 
-/* Desktop editorial home headline */
+/* Desktop homepage headline distribution */
 @media(min-width:1101px){
-  .hero-copy .home-editorial-title{
-    display:flex!important;
-    flex-direction:column!important;
+  .hero-copy .home-split-title{
     margin:20px 0 28px!important;
-  }
-  .hero-copy .home-title-lead{
-    display:block!important;
-    font-family:var(--font-body)!important;
-    font-size:14px!important;
-    font-weight:600!important;
-    line-height:1.2!important;
-    letter-spacing:.13em!important;
-    text-transform:uppercase!important;
-    color:var(--purple)!important;
-    margin-bottom:10px!important;
-  }
-  .hero-copy .home-title-focus{
-    display:block!important;
-    margin:0!important;
     font-family:var(--font-heading)!important;
-    font-size:52px!important;
+    font-size:58px!important;
     font-weight:400!important;
-    line-height:1.02!important;
+    line-height:1.03!important;
     color:#292929!important;
   }
+  .hero-copy .home-split-title span{
+    display:block!important;
+    font:inherit!important;
+    color:inherit!important;
+    letter-spacing:inherit!important;
+    text-transform:none!important;
+  }
 }
+
 
