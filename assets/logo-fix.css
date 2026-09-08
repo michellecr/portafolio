@@ -31,3 +31,31 @@
     justify-content:center!important;
   }
 }
+
+/* Desktop editorial home headline */
+@media(min-width:1101px){
+  .hero-copy .home-editorial-title{
+    display:flex!important;
+    flex-direction:column!important;
+    margin:20px 0 28px!important;
+    line-height:1!important;
+  }
+  .hero-copy .home-title-lead{
+    display:block!important;
+    font-family:var(--font-body)!important;
+    font-size:15px!important;
+    font-weight:600!important;
+    letter-spacing:.13em!important;
+    text-transform:uppercase!important;
+    color:var(--purple)!important;
+    margin-bottom:10px!important;
+  }
+  .hero-copy .home-title-focus{
+    display:block!important;
+    font-family:var(--font-heading)!important;
+    font-size:58px!important;
+    font-weight:400!important;
+    line-height:1.02!important;
+    color:#292929!important;
+  }
+}
