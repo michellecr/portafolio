@@ -17,3 +17,17 @@
   .page>.eyebrow,
   .simple-grid .eyebrow{font-size:13px!important}
 }
+
+/* Desktop hero portfolio CTA emphasis */
+@media(min-width:1101px){
+  .hero .button{
+    font-size:15px!important;
+    font-weight:600!important;
+    padding:17px 30px!important;
+    letter-spacing:.055em!important;
+    min-height:54px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+}
