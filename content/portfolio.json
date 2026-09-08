@@ -50,7 +50,7 @@
     {
       "title": "Historias",
       "visible": true,
-      "cover": "/portafolio/uploads/foto-1.jpg",
+      "cover": "/portafolio/uploads/foto-1-20260908-020034-01-d717b127.jpg",
       "photos": [
         {
           "image": "/portafolio/uploads/foto-1-2.jpg",
@@ -94,6 +94,16 @@
         },
         {
           "image": "/portafolio/uploads/foto-34.jpg",
+          "title": "",
+          "caption": ""
+        },
+        {
+          "image": "/portafolio/uploads/foto-1-20260908-020105-01-cdc21c2e.jpg",
+          "title": "",
+          "caption": ""
+        },
+        {
+          "image": "/portafolio/uploads/foto-2-20260908-020336-01-25b543ce.jpg",
           "title": "",
           "caption": ""
         }
