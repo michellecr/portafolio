@@ -48,5 +48,37 @@
 })();
 </script>
 <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+
+<script id="auto-resolve-duplicate-media">
+(function () {
+  const normalize = s => (s || '').trim().toLowerCase();
+  const resolveDuplicateDialog = () => {
+    const buttons = Array.from(document.querySelectorAll('button'));
+    const keepBoth = buttons.find(btn => {
+      const t = normalize(btn.textContent);
+      return t === 'conservar ambos' || t === 'keep both';
+    });
+    if (!keepBoth) return;
+
+    const dialog = keepBoth.closest('[role="dialog"], dialog') || keepBoth.parentElement?.parentElement;
+    const text = normalize(dialog?.textContent || document.body.textContent);
+    const isDuplicateConflict =
+      text.includes('conflictos de nombres de archivo') ||
+      text.includes('ya existe un archivo llamado') ||
+      text.includes('file name conflict') ||
+      text.includes('already exists');
+
+    if (isDuplicateConflict && !keepBoth.dataset.autoResolved) {
+      keepBoth.dataset.autoResolved = 'true';
+      keepBoth.click();
+    }
+  };
+
+  const observer = new MutationObserver(resolveDuplicateDialog);
+  observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  document.addEventListener('click', () => setTimeout(resolveDuplicateDialog, 50), true);
+  setInterval(resolveDuplicateDialog, 500);
+})();
+</script>
 </body>
 </html>
