@@ -17,7 +17,7 @@ const renderFooter=(site)=>{
   const email=String(f.email_address||'').trim();
   const instagramLink=instagram?`<a class="footer-social" href="${esc(instagram)}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">${instagramSvg}</a>`:`<span class="footer-social is-disabled" aria-label="Instagram sin configurar">${instagramSvg}</span>`;
   const emailLink=email?`<a class="footer-social" href="mailto:${esc(email)}" aria-label="Correo electrónico">${mailSvg}</a>`:`<span class="footer-social is-disabled" aria-label="Correo sin configurar">${mailSvg}</span>`;
-  const contactHref=email?`mailto:${esc(email)}`:'./contacto.html';
+  const contactHref=email?`mailto:${esc(email)}`:'/contacto/';
   footer.innerHTML=`<div class="footer-grid">
     <div class="footer-quote"><span class="quote-mark">“</span><p>${esc(f.quote||'La luz no solo revela, también guarda memoria.')}</p></div>
     <div class="footer-project"><p class="footer-kicker">${esc(f.project_title||'¿TIENES UN PROYECTO?')}</p><p>${esc(f.project_text||'Hablemos sobre tu idea y cómo puedo ayudarte a contarla en imágenes.')}</p></div>
