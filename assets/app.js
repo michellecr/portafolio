@@ -26,7 +26,7 @@ const renderFooter=(site)=>{
   </div>`;
 };
 
-fetch(new URL('content/site.json',siteRoot),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(site=>{
+fetch(new URL('content/site.json',siteRoot),{cache:'default'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(site=>{
   if(site.fonts?.heading)document.documentElement.style.setProperty('--font-heading',fontStacks[site.fonts.heading]||fontStacks.Georgia);
   if(site.fonts?.body)document.documentElement.style.setProperty('--font-body',fontStacks[site.fonts.body]||fontStacks.Arial);
   document.querySelectorAll('[data-content]').forEach(el=>{const value=getPath(site,el.dataset.content);if(value===undefined||value===null)return;if(el.dataset.multiline==='true')el.innerHTML=String(value).split('\n').map(v=>v.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))).join('<br>');else el.textContent=value;});
@@ -35,12 +35,12 @@ fetch(new URL('content/site.json',siteRoot),{cache:'no-store'}).then(r=>{if(!r.o
 }).catch(()=>{});
 
 const homeHero=document.querySelector('#homeHero');const photographer=document.querySelector('#photographer');
-if(homeHero||photographer){fetch(new URL('content/home.json',siteRoot),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(data=>{if(homeHero&&data.hero){homeHero.src=mediaPath(data.hero);homeHero.alt=data.hero_alt||'Fotografía principal';}if(photographer&&data.photographer){photographer.src=mediaPath(data.photographer);photographer.alt=data.photographer_alt||'Fotógrafa';}}).catch(()=>{});}
+if(homeHero||photographer){fetch(new URL('content/home.json',siteRoot),{cache:'default'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(data=>{if(homeHero&&data.hero){homeHero.src=mediaPath(data.hero);homeHero.alt=data.hero_alt||'Fotografía principal';}if(photographer&&data.photographer){photographer.src=mediaPath(data.photographer);photographer.alt=data.photographer_alt||'Fotógrafa';}}).catch(()=>{});}
 
 const coverPosition=(title)=>{const t=String(title||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(t.includes('eventos en vivo'))return'left center';if(t.includes('historias'))return'center center';if(t.includes('viajes'))return'center center';if(t.includes('retratos'))return'center top';return'center center';};
 const rail=document.querySelector('#portfolioRail');
 if(rail){
-  fetch(new URL('content/portfolio.json',siteRoot),{cache:'no-store'})
+  fetch(new URL('content/portfolio.json',siteRoot),{cache:'default'})
     .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
     .then(data=>{
       const lb=document.querySelector('#lightbox');
@@ -55,6 +55,7 @@ if(rail){
 
       const show=()=>{
         const p=active[idx];
+        img.decoding='async';
         img.src=mediaPath(p?.image);
         title.textContent=p?.title||'';
         if(caption)caption.textContent=p?.caption||'';
@@ -97,6 +98,9 @@ if(rail){
           frame.className='group-frame';
           const cover=document.createElement('img');
           cover.className='group-cover';
+          cover.decoding='async';
+          cover.loading='eager';
+          cover.fetchPriority='high';
           cover.src=mediaPath(g.cover);
           cover.alt=g.title||'';
           cover.style.objectPosition=coverPosition(g.title);
@@ -165,9 +169,11 @@ if(rail){
           button.setAttribute('aria-label',`Ampliar fotografía ${i+1} de ${photos.length}`);
 
           const photo=document.createElement('img');
+          photo.decoding='async';
+          photo.loading=i<4?'eager':'lazy';
+          photo.fetchPriority=i<4?'high':'low';
           photo.src=mediaPath(p.image);
           photo.alt=p.title||g.title||'Fotografía';
-          photo.loading='lazy';
           safeImage(photo);
 
           button.appendChild(photo);
